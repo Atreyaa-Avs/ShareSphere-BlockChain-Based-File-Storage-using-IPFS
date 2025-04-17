@@ -82,21 +82,12 @@ const FileUpload = ({ account, provider, contract }) => {
     }
   }, [password]);
 
-  const handleSubmit = async () => {
-    if (!uploadedFile || password.length === 0) return;
-
-    const passwordHash = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
-
-    setPasswordHash(passwordHash);
-  };
-
   const handleFileUpload = async () => {
     if (!uploadedFile || password.length === 0) return;
 
     toast.loading("Encrypting the File...");
 
     try {
-      // Encrypt the file with the provided password
       const encryptedBlob = await encryptFile(uploadedFile, password);
 
       const formData = new FormData();
@@ -108,7 +99,6 @@ const FileUpload = ({ account, provider, contract }) => {
       toast.dismiss();
       toast.loading("Uploading to IPFS...");
 
-      // Upload the encrypted file to Pinata (IPFS)
       const resFile = await axios.post(
         "https://api.pinata.cloud/pinning/pinFileToIPFS",
         formData,
@@ -122,18 +112,15 @@ const FileUpload = ({ account, provider, contract }) => {
         }
       );
 
-      // Generate the IPFS URL for the file
       const fileHash = `https://gateway.pinata.cloud/ipfs/${resFile.data.IpfsHash}`;
 
       toast.dismiss();
       toast.loading("Approving transaction...");
 
-      // Call the smart contract to store the file URL and password hash
       const signer = await provider.getSigner();
       const tx = await contract.connect(signer).add(account, fileHash);
       await tx.wait();
 
-      // Store the password hash for the file in the contract
       const addPasswordHashTx = await contract
         .connect(signer)
         .addPasswordHash(account, fileName, fileHash, passwordHash);
@@ -146,26 +133,6 @@ const FileUpload = ({ account, provider, contract }) => {
       toast.dismiss();
       toast.error("Upload failed!");
       console.error(err);
-    }
-  };
-
-  const handleDownload = async (url, password) => {
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-
-      // Decrypt the file using the password
-      const decryptedBlob = await decryptFile(blob, password);
-
-      const downloadUrl = window.URL.createObjectURL(decryptedBlob);
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = `decrypted_${Date.now()}`;
-      a.click();
-      toast.success("File decrypted and downloaded!");
-    } catch (error) {
-      toast.error("Decryption failed. Wrong password?");
-      console.error(error);
     }
   };
 
@@ -249,7 +216,6 @@ const FileUpload = ({ account, provider, contract }) => {
             {uploadedFile && (
               <div>
                 <PasswordInput onChange={setPassword} />
-                {/* <Button onClick={() => console.log(password)}>View</Button> */}
               </div>
             )}
 

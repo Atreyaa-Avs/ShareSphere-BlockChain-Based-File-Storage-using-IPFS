@@ -2,14 +2,12 @@ import Upload from "../src/artifacts/contracts/Upload.sol/Upload.json";
 import React, { useEffect, useState } from "react";
 import LandingBg from "/LandingBg.jpg";
 import Nav from "./components/Nav";
-import { delay, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "./components/ui/button";
 import Logo from "/Logo.png";
 import FileUpload from "./components/FileUpload";
 import { ethers } from "ethers";
 import { FileLock, FileUser, Waypoints } from "lucide-react";
-import Display from "./components/Display";
-import FilesDialog from "./components/MyFilesDialog";
 import MyFilesDialog from "./components/MyFilesDialog";
 import SharedFilesDialog from "./components/SharedFilesDialog";
 import MyFilesDetails from "./components/MyFileDetails";
@@ -128,21 +126,6 @@ const App = () => {
     provider && loadProvider();
   }, []);
 
-  const requestDownload = async (fileHash, password) => {
-    try {
-      const isVerified = await contract.verifyPassword(fileHash, password);
-      if (isVerified) {
-        toast.success("Password verified! Download will begin shortly.");
-        // Trigger download logic here (e.g., fetch from IPFS or backend)
-      } else {
-        toast.error("Incorrect password. Access denied.");
-      }
-    } catch (error) {
-      console.error("Verification failed:", error);
-      toast.error("Error verifying password.");
-    }
-  };
-
   return (
     <>
       {loading && (
@@ -235,10 +218,7 @@ const App = () => {
                 </p>
               </div>
             </div>
-            {/* <Display contract={contract} account={account}/> */}
-            {/* <Button className="w-fit" onClick={getFileDetails}>
-              Get Hashes
-            </Button> */}
+
             <div className="file_buttons flex flex-col gap-4 mt-5">
               <div className="glassmorphism-bg grid grid-cols-3 max-lg:grid-cols-2 rounded-md py-3 max-lg:mx-24">
                 <div className="h-fit w-full lg:my-auto">
@@ -281,8 +261,7 @@ const App = () => {
                       name={"View All Files"}
                       account={account}
                       fileDetails={allFileDetails}
-                      download={requestDownload}
-                      canDownload={false}
+                      contract={contract}
                     />
                   </div>
                 </div>
