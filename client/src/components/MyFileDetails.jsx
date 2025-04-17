@@ -41,7 +41,6 @@ export default function MyFilesDetails({ name, account, fileDetails }) {
                     <div>Password Hash</div>
                   </div>
 
-                  {/* File rows */}
                   {fileDetails?.map((file, index) => (
                     <div
                       className="grid grid-cols-2 gap-2 p-2 border-b"

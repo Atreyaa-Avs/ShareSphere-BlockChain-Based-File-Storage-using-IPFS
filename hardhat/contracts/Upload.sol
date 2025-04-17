@@ -41,16 +41,18 @@ contract Upload {
         return passwordHashes[msg.sender];
     }
 
-    // Verify if the password matches (for a given user and file)
     function verifyPassword(address user, string memory fileName, string memory passwordAttempt) public view returns (bool) {
-        for (uint i = 0; i < passwordHashes[user].length; i++) {
-            if (keccak256(abi.encodePacked(passwordAttempt)) == keccak256(abi.encodePacked(passwordHashes[user][i].sha256Hash)) && 
-                keccak256(abi.encodePacked(passwordHashes[user][i].fileName)) == keccak256(abi.encodePacked(fileName))) {
-                return true;
-            }
+    for (uint i = 0; i < passwordHashes[user].length; i++) {
+        if (
+            keccak256(abi.encodePacked(passwordAttempt)) == keccak256(abi.encodePacked(passwordHashes[user][i].sha256Hash)) && 
+            keccak256(abi.encodePacked(passwordHashes[user][i].fileName)) == keccak256(abi.encodePacked(fileName))
+        ) {
+            return true;
         }
-        return false;
     }
+    return false;
+}
+
 
     function getUserFileNamesAndHashes() external view returns (string[] memory, string[] memory) {
         uint length = passwordHashes[msg.sender].length;

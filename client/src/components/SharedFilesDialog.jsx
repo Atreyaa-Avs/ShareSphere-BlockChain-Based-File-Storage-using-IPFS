@@ -12,7 +12,12 @@ import {
 import { FileImage, FileText } from "lucide-react";
 import { AccessPassword } from "./AccessPassword";
 
-export default function SharedFilesDialog({ name, account, fileDetails }) {
+export default function SharedFilesDialog({
+  name,
+  account,
+  fileDetails,
+  contract,
+}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -27,7 +32,9 @@ export default function SharedFilesDialog({ name, account, fileDetails }) {
             <DialogDescription asChild>
               <div className="px-6 py-4">
                 <p>
-                  <span className="text-black font-medium">My Account No: </span>
+                  <span className="text-black font-medium">
+                    My Account No:{" "}
+                  </span>
                   {account}
                 </p>
                 <br />
@@ -38,7 +45,6 @@ export default function SharedFilesDialog({ name, account, fileDetails }) {
                     <div>Action</div>
                   </div>
 
-                  {/* File rows */}
                   {fileDetails?.map((file, index) => (
                     <div
                       className="grid grid-cols-3 gap-2 p-2 border-b"
@@ -58,7 +64,12 @@ export default function SharedFilesDialog({ name, account, fileDetails }) {
                       </div>
 
                       <div>
-                        <AccessPassword className="w-fit" />
+                        <AccessPassword
+                          selectedFileDetails={file}
+                          className="w-fit"
+                          contract = {contract}
+                          account = {account}
+                        />
                       </div>
                     </div>
                   ))}
