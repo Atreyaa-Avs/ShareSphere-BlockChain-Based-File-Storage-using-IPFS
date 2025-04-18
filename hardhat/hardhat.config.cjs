@@ -11,8 +11,6 @@ task("accounts", "Print the list of accounts",async (_,hre) => {
 
   for(const account of accounts){
     const balance = await hre.ethers.provider.getBalance(account.address)
-    console.log(`Address: ${account.address} | Balance: ${ethers.utils.formatEther(balance)}ETH`)
-    // console.log(account)
   }
 })
 

@@ -36,7 +36,6 @@ contract Upload {
         passwordHashes[msg.sender].push(File(userAddress, fileName, _ipfsURL, sha256Hash));
     }
 
-    // Get password hashes for the sender (owner)
     function getPasswordHashes() external view returns (File[] memory) {
         return passwordHashes[msg.sender];
     }
