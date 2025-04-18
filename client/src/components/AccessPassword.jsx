@@ -19,7 +19,6 @@ import { sha256 } from "js-sha256";
 
 export function AccessPassword({ selectedFileDetails, contract, account }) {
   const [password, setPassword] = useState("");
-  console.log("From Access: ",selectedFileDetails)
   const handleSubmit = async () => {
     if (!password) {
       toast.error("Please enter the password.");
@@ -32,8 +31,6 @@ export function AccessPassword({ selectedFileDetails, contract, account }) {
     const fileHash = selectedFileDetails[2];
 
     try {
-      console.log("Verifying password for:", { account, fileName, password });
-
       const isVerified = await contract.verifyPassword(
         fileOwner,
         fileName,
@@ -52,8 +49,6 @@ export function AccessPassword({ selectedFileDetails, contract, account }) {
         }
 
         const blob = await response.blob();
-
-        console.log("Fetched file blob:", blob);
 
         const decryptedBlob = await decryptFile(blob, password);
 

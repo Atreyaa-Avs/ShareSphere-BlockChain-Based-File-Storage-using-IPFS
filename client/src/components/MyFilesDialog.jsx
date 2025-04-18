@@ -14,7 +14,6 @@ import CopyInput from "./CopyInput";
 import { AccessPassword } from "./AccessPassword";
 
 export default function MyFilesDialog({ name, account, fileDetails }) {
-  console.log(fileDetails);
   return (
     <Dialog>
       <DialogTrigger asChild>

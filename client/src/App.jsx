@@ -50,12 +50,6 @@ const App = () => {
   const getFileDetails = async () => {
     try {
       const fileHashes = await contract.getPasswordHashes();
-      console.log("File Hashes for the current user:");
-      fileHashes.forEach((file, index) => {
-        console.log(
-          `File Name: ${file.fileName},IPFS_URL: ${file.ipfsURL}, Hash: ${file.sha256Hash}`
-        );
-      });
       setFileDetails(fileHashes);
     } catch (err) {
       console.error("Error fetching file hashes:", err);
@@ -66,7 +60,6 @@ const App = () => {
     try {
       const allFileHashes = await contract.getAllFiles();
       setAllFileDetails(allFileHashes);
-      console.log("All Files: ", allFileHashes);
     } catch (err) {
       console.error("Error fetching all files hashes:", err);
     }
@@ -80,7 +73,6 @@ const App = () => {
         sha256Hash: hashes[index],
       }));
       setAllUserFileDetails(fileDetails);
-      console.log("Current User FileName & Hashes: ", fileDetails);
     } catch (err) {
       console.error("Error fetching file names and hashes:", err);
     }
@@ -116,7 +108,6 @@ const App = () => {
           Upload.abi,
           signer
         );
-        //console.log(contract);
         setContract(contract);
         setProvider(provider);
       } else {

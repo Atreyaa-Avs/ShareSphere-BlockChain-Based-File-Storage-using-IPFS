@@ -10,7 +10,6 @@ const Display = ({ contract, account }) => {
 
     if (otheraddress) {
       dataArray = await contract.display(otheraddress);
-      console.log(dataArray);
     } else {
       dataArray = await contract.display(account);
     }
@@ -19,9 +18,6 @@ const Display = ({ contract, account }) => {
 
     if (!isEmpty) {
       const str = dataArray.toString();
-      const str_array = str.split(",");
-      console.log(str);
-      console.log(str_array);
     }
   };
 
