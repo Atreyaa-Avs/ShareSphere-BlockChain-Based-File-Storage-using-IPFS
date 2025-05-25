@@ -1,9 +1,24 @@
 // cryptoUtils.js
 
-export async function encryptFile(file, password) {
-  const iv = crypto.getRandomValues(new Uint8Array(16));
+function hexToBytes(hex) {
+  const bytes = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < hex.length; i += 2) {
+    bytes[i / 2] = parseInt(hex.substr(i, 2), 16);
+  }
+  return bytes;
+}
 
-  const key = await getKeyFromPassword(password, iv);
+export async function encryptFile(file, hashedPasswordHex) {
+  const iv = crypto.getRandomValues(new Uint8Array(16)); // Random IV
+
+  // Use SHA-256 hash as AES key
+  const key = await crypto.subtle.importKey(
+    "raw",
+    hexToBytes(hashedPasswordHex),
+    { name: "AES-CBC" },
+    false,
+    ["encrypt"]
+  );
 
   const fileBuffer = await file.arrayBuffer();
 
@@ -21,14 +36,21 @@ export async function encryptFile(file, password) {
   return new Blob([combined], { type: file.type });
 }
 
-export async function decryptFile(encryptedBlob, password) {
+export async function decryptFile(encryptedBlob, hashedPasswordHex) {
   try {
     const encryptedArray = new Uint8Array(await encryptedBlob.arrayBuffer());
 
-    const iv = encryptedArray.slice(0, 16);
-    const data = encryptedArray.slice(16);
+    const iv = encryptedArray.slice(0, 16); // First 16 bytes = IV
+    const data = encryptedArray.slice(16);  // Rest = Encrypted content
 
-    const key = await getKeyFromPassword(password, iv);
+    // Use SHA-256 hash as AES key
+    const key = await crypto.subtle.importKey(
+      "raw",
+      hexToBytes(hashedPasswordHex),
+      { name: "AES-CBC" },
+      false,
+      ["decrypt"]
+    );
 
     const decrypted = await crypto.subtle.decrypt(
       { name: "AES-CBC", iv },
@@ -41,28 +63,4 @@ export async function decryptFile(encryptedBlob, password) {
     console.error("Error during decryption:", error);
     throw new Error("Decryption failed!");
   }
-}
-
-async function getKeyFromPassword(password, salt) {
-  const encoder = new TextEncoder();
-  const keyMaterial = await crypto.subtle.importKey(
-    "raw",
-    encoder.encode(password),
-    "PBKDF2",
-    false,
-    ["deriveKey"]
-  );
-
-  return crypto.subtle.deriveKey(
-    {
-      name: "PBKDF2",
-      salt,
-      iterations: 100000,
-      hash: "SHA-256",
-    },
-    keyMaterial,
-    { name: "AES-CBC", length: 256 },
-    false,
-    ["encrypt", "decrypt"]
-  );
 }
