@@ -127,7 +127,7 @@ const App = () => {
             transition={{ duration: 1.2, ease: "easeInOut" }}
             className="fixed inset-0 flex items-center justify-center bg-black z-50 w-full h-full overflow-hidden"
           >
-            <div className="flex justify-center items-center gap-32 ml-12 max-lg:ml-32 relative">
+            <div className="flex justify-center items-center gap-32 ml-48 max-lg:ml-32 relative">
               <motion.img
                 src={Logo}
                 alt="Moving Logo"
@@ -137,10 +137,10 @@ const App = () => {
                   opacity: { duration: 2.2, delay: 1.5 },
                   x: { delay: 3.2, duration: 0.8, ease: "easeInOut" },
                 }}
-                className="w-32 h-32 absolute"
+                className="w-32 h-32 absolute -ml-24"
               />
 
-              <h1 className="text-5xl font-semibold font-mono text-white">
+              <h1 className="text-5xl font-semibold font-mono text-white -ml-24">
                 {"ShareSphere".split("").map((char, index) => (
                   <motion.span
                     className="inline-block overflow-hidden"
@@ -200,7 +200,7 @@ const App = () => {
                 </p>
               </div>
               <p className="text-center text-neutral-700 pb-3">
-                (GDrive Web3.0)
+                (GDrive Web-3.0)
               </p>
               <div className="w-fit mx-auto text-center">
                 <p className="bg-white px-5 rounded-md">
@@ -210,20 +210,20 @@ const App = () => {
               </div>
             </div>
 
-            <div className="file_buttons flex flex-col gap-4 mt-5">
-              <div className="glassmorphism-bg grid grid-cols-3 max-lg:grid-cols-2 rounded-md py-3 max-lg:mx-24">
-                <div className="h-fit w-full lg:my-auto">
+            <div className="file_buttons flex flex-col gap-4 mt-5 md:mx-24">
+              <div className="glassmorphism-bg grid grid-cols-3 max-lg:grid-cols-2 rounded-md py-3 max-lg:mx-12 max-md:flex max-md:flex-col">
+                <div className="h-fit w-full my-auto lg:my-auto">
                   <FileUser
                     strokeWidth={1.3}
                     className="w-1/2 h-1/2 mx-auto text-neutral-500"
                   />
                 </div>
-                <div className="lg:col-span-2 max-lg:my-auto">
-                  <h1 className="text-2xl underline font-bold">Your Files</h1>
+                <div className="lg:col-span-2 max-lg:my-auto pr-4 px-4">
+                  <h1 className="text-2xl underline font-bold max-md:text-center">Your Files</h1>
                   <p className="text-neutral-800 font-medium">
                     View your uploaded file in the Blockchain.
                   </p>
-                  <div className="inline-flex justify-end items-end w-full px-5 my-4">
+                  <div className="inline-flex justify-end max-md:justify-center max-md:items-center w-full my-4">
                     <MyFilesDialog
                       name={"My Uploaded Files"}
                       account={account}
@@ -232,22 +232,22 @@ const App = () => {
                   </div>
                 </div>
               </div>
-              <div className="glassmorphism-bg grid grid-cols-3 max-lg:grid-cols-2 rounded-md py-3 max-lg:mx-24">
-                <div className="h-fit w-full lg:my-auto">
+              <div className="glassmorphism-bg grid grid-cols-3 max-lg:grid-cols-2 rounded-md py-3 max-lg:mx-12 max-md:flex max-md:flex-col">
+                <div className="h-fit md:w-full my-auto pr-4">
                   <Waypoints
                     strokeWidth={1}
                     className="w-1/2 h-1/2 mx-auto text-neutral-500"
                   />
                 </div>
-                <div className="lg:col-span-2 max-lg:my-auto">
-                  <h1 className="text-2xl underline font-bold text-balance">
+                <div className="lg:col-span-2 max-lg:my-auto px-4">
+                  <h1 className="text-2xl underline font-bold text-balance max-md:text-center">
                     All Files
                   </h1>
                   <p className="text-neutral-800 font-medium max-w-sm">
                     View all files that has been shared has been stored in the
                     Blockchain.
                   </p>
-                  <div className="inline-flex justify-end items-end w-full px-5 my-4">
+                  <div className="inline-flex justify-end items-end w-full my-4">
                     <SharedFilesDialog
                       name={"View All Files"}
                       account={account}

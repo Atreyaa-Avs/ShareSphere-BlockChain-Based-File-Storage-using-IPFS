@@ -21,7 +21,7 @@ export default function SharedFilesDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="">{name}</Button>
+        <Button variant="" className="mx-auto">{name}</Button>
       </DialogTrigger>
       <DialogContent className="flex flex-col gap-0 p-0 sm:max-h-[min(640px,80vh)] sm:max-w-3xl [&>button:last-child]:top-3.5">
         <DialogHeader className="contents space-y-0 text-left">

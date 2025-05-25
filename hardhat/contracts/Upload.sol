@@ -40,18 +40,17 @@ contract Upload {
         return passwordHashes[msg.sender];
     }
 
-    function verifyPassword(address user, string memory fileName, string memory passwordAttempt) public view returns (bool) {
+    function verifyPassword(address user, string memory fileName, string memory passwordAttemptHash) public view returns (bool) {
     for (uint i = 0; i < passwordHashes[user].length; i++) {
         if (
-            keccak256(abi.encodePacked(passwordAttempt)) == keccak256(abi.encodePacked(passwordHashes[user][i].sha256Hash)) && 
-            keccak256(abi.encodePacked(passwordHashes[user][i].fileName)) == keccak256(abi.encodePacked(fileName))
-        ) {
-            return true;
+                keccak256(abi.encodePacked(passwordHashes[user][i].fileName)) == keccak256(abi.encodePacked(fileName)) &&
+                keccak256(bytes(passwordHashes[user][i].sha256Hash)) == keccak256(bytes(passwordAttemptHash))
+            ) {
+                return true;
+            }
         }
+        return false;
     }
-    return false;
-}
-
 
     function getUserFileNamesAndHashes() external view returns (string[] memory, string[] memory) {
         uint length = passwordHashes[msg.sender].length;
@@ -69,7 +68,6 @@ contract Upload {
     function getAllFiles() external view returns (File[] memory) {
         uint totalCount = 0;
 
-        // First calculate total number of files
         for (uint i = 0; i < users.length; i++) {
             totalCount += passwordHashes[users[i]].length;
         }
@@ -77,7 +75,6 @@ contract Upload {
         File[] memory allFiles = new File[](totalCount);
         uint index = 0;
 
-        // Copy all files into a single array
         for (uint i = 0; i < users.length; i++) {
             File[] memory userFiles = passwordHashes[users[i]];
             for (uint j = 0; j < userFiles.length; j++) {

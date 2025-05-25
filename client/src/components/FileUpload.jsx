@@ -88,7 +88,7 @@ const FileUpload = ({ account, provider, contract }) => {
     toast.loading("Encrypting the File...");
 
     try {
-      const encryptedBlob = await encryptFile(uploadedFile, password);
+      const encryptedBlob = await encryptFile(uploadedFile, passwordHash);
 
       const formData = new FormData();
       formData.append("file", new File([encryptedBlob], fileName));
@@ -139,7 +139,7 @@ const FileUpload = ({ account, provider, contract }) => {
   return (
     <div
       {...getRootProps()}
-      className="relative pt-1 w-1/2 h-full my-auto max-lg:w-[90%] max-lg:mx-auto"
+      className="relative pt-1 w-1/2 h-full my-auto max-lg:w-[80%] max-md:w-full max-lg:mx-auto xl:-ml-12 max-xl:-ml-8 max-md:-ml-10 max-lg:ml-12"
     >
       <Toaster />
 
@@ -150,7 +150,7 @@ const FileUpload = ({ account, provider, contract }) => {
         </div>
       )}
 
-      <div className="flex p-6 gap-6 items-center justify-center h-full mx-12">
+      <div className="flex p-6 gap-6 items-center justify-center h-full mx-6 md:mx-12 w-full">
         <div className="flex flex-col bg-[#ddd] w-full p-5 rounded-lg pb-12 mx-6">
           <div className="text-center text-2xl font-bold my-2">
             Add / Upload File
@@ -198,7 +198,7 @@ const FileUpload = ({ account, provider, contract }) => {
                     <X size={16} />
                   </button>
                   <p>
-                    <strong>File:</strong> {uploadedFile.name}
+                    <strong>File:</strong> {uploadedFile.name.slice(0,20) + "..."}
                   </p>
                   <p>
                     <strong>Type:</strong> {uploadedFile.type}

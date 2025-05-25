@@ -25,7 +25,6 @@ export function AccessPassword({ selectedFileDetails, contract, account }) {
       return;
     }
 
-    const hashedPassword = sha256(password);
     const fileOwner = selectedFileDetails[0];
     const fileName = selectedFileDetails[1];
     const fileHash = selectedFileDetails[2];
@@ -34,7 +33,7 @@ export function AccessPassword({ selectedFileDetails, contract, account }) {
       const isVerified = await contract.verifyPassword(
         fileOwner,
         fileName,
-        hashedPassword
+        password
       );
 
       if (isVerified) {
