@@ -42,8 +42,7 @@ availability**.
 - Node.js & npm installed
 - Metamask browser extension installed
 - Pinata account & API keys
-- Local blockchain (Ganache/Hardhat) or Ethereum testnet
-  (Goerli/Sepolia)
+- Local blockchain (Ganache/Hardhat)
 
 ### 2️⃣ Clone the Repository
 
