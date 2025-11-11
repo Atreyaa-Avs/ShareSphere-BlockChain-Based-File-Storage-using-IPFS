@@ -7,7 +7,7 @@ with blockchain integration.\
 It provides **secure, scalable, and censorship-resistant file storage**.
 Unlike centralized clouds, ShareSphere uses a **peer-to-peer network**
 to distribute files across nodes, ensuring **redundancy, integrity, and
-availability**.
+availability**. 
 
 ### 🔐 Key Features
 
