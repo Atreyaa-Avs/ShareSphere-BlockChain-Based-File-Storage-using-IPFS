@@ -1,6 +1,6 @@
 # ShareSphere - Blockchain-Based File Storage using IPFS
 
-## 📌 About
+## About
 
 **ShareSphere** is a decentralized file storage dApp built on **IPFS**
 with blockchain integration.\
