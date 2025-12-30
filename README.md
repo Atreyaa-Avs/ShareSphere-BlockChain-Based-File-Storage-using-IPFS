@@ -1,4 +1,4 @@
-# ShareSphere - Blockchain-Based File Storage using IPFS
+# ShareSphere - Blockchain-Based File Storage using IPFS 
 
 ## About
 
